@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catdogjob2
+  labels:
+    app: serviceapi
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serviceapi
+  template:
+    metadata:
+      labels:
+        app: serviceapi
+        tier: backend
+    spec:
+      containers:
+      - name: test
+        image: kys2020/kys2020:catdog5
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: kys2020pvc
+          mountPath: /mnt
+      volumes:
+        - name: kys2020pvc
+          persistentVolumeClaim:
+            claimName: kys2020pvc
